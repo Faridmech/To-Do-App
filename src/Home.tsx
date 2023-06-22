@@ -1,16 +1,12 @@
 import { Box, Center, Text } from "@chakra-ui/react";
 import React from "react";
 import { Inputed } from "./components/Inputed";
-import { List } from "./components/List";
-import { useState } from "react";
 
 
-//import { type } from "@testing-library/user-event/dist/type";
+
 
 
 export const Home: React.FC = () => {
-  
-  const [, setInputText] = useState<string>("");
 
   return (
     <>
@@ -30,13 +26,7 @@ export const Home: React.FC = () => {
         </Box>
       </Center>
 
-      <React.Fragment>
-
-        <Inputed setInputText={setInputText} />
-
-      </React.Fragment>
-
-      <List />
+      <Inputed  />
     </>
   );
 };

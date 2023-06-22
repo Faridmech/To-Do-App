@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction} from "react"
+import { ChangeEvent} from "react"
 
-export type TSetInput = {setInputText: React.Dispatch<React.SetStateAction<string>>};
-
-export type State = {value: string; setInputText: Dispatch<SetStateAction<string>>;} 
+export type EType = {e:ChangeEvent<HTMLInputElement>};
