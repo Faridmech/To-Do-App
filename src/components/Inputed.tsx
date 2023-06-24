@@ -4,32 +4,18 @@ import { BsFillPlusCircleFill } from "react-icons/bs";
 //import { ChangeEvent } from "react";
 import { List } from "./List";
 
-
-interface IProps {
-
-}
+interface IProps {}
 
 export const Inputed: React.FC<IProps> = () => {
   const [inputText, setInputText] = useState<string>("");
 
-  
+  const [toDoListArray, setToDoListArray] = useState<string[]>([]);
 
-  const [toDoListArray, setToDoListArray] = useState<string[]>([])
-  
-
-  const listHandeler = ()=>{
- 
-    if(inputText.trim()){
-
-      setToDoListArray((prev) =>[...prev, inputText] );
+  const listHandeler = () => {
+    if (inputText.trim()) {
+      setToDoListArray((prev) => [...prev, inputText]);
     }
- 
-    
-  }
-
-
-
-
+  };
 
   return (
     <>
@@ -38,7 +24,7 @@ export const Inputed: React.FC<IProps> = () => {
           Write your do list and keep tracking
         </Text>
       </Center>
-      <Center>
+      <Center marginBottom='5rem'>
         <Box
           marginTop="2rem"
           width="700px"
@@ -46,10 +32,19 @@ export const Inputed: React.FC<IProps> = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Input border="2px solid black" value={inputText} onChange={(e)=> setInputText(e.target.value)} />
-          <IconButton aria-label="add-todo" isRound icon={<BsFillPlusCircleFill />} type="submit" onClick={listHandeler} />
-           
-          
+          <Input
+            border="2px solid black"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+          />
+          <IconButton
+            marginLeft='10px'
+            aria-label="add-todo"
+            isRound
+            icon={<BsFillPlusCircleFill />}
+            type="submit"
+            onClick={listHandeler}
+          />
         </Box>
         <Box
           marginTop="2rem"

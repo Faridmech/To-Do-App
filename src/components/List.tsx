@@ -1,30 +1,41 @@
 import React from "react";
+import { Box, Text, IconButton } from "@chakra-ui/react";
+import { MdDoneAll } from "react-icons/md";
 
-
- interface  AProps {
-  toDoListArray: string[] 
- }
-export const List:React.FC<AProps> =({toDoListArray})=>{
-
-
-  console.log("Listrr", toDoListArray)
-  return(
-    <>
-    
-
-    <div>
-     {
-      toDoListArray.map((element)=>{
-        return (
-          <h2 key={element}>{element}</h2>
-        )
-      })
-     }
-    </div>
-
-
-    
-    
-    </>
-  )
+interface AProps {
+  toDoListArray: string[];
 }
+export const List: React.FC<AProps> = ({ toDoListArray }) => {
+  console.log("Listrr", toDoListArray);
+  return (
+    <>
+      <div>
+        {toDoListArray.map((element) => {
+          return (
+            <Box display='flex' flexDirection='row'>
+              <Box
+                border="2px solid red"
+                width="40.5rem"
+                height="2rem"
+                marginLeft="19rem"
+                marginTop="1rem"
+                borderRadius="0.5rem"
+              >
+                <Text key={element}>{element}</Text>
+              </Box>
+              <Box>
+                <IconButton
+                  marginLeft="10px"
+                  aria-label="add-todo"
+                  isRound
+                  icon={<MdDoneAll />}
+                  type="submit"
+                />
+              </Box>
+            </Box>
+          );
+        })}
+      </div>
+    </>
+  );
+};
