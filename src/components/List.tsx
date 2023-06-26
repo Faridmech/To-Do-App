@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text, IconButton } from "@chakra-ui/react";
-import { MdDoneAll } from "react-icons/md";
+import { MdDoneAll, MdOutlineDeleteOutline } from "react-icons/md";
 
 interface AProps {
   toDoListArray: string[];
@@ -23,12 +23,19 @@ export const List: React.FC<AProps> = ({ toDoListArray }) => {
               >
                 <Text key={element}>{element}</Text>
               </Box>
-              <Box>
+              <Box marginTop='0.7rem'>
                 <IconButton
                   marginLeft="10px"
                   aria-label="add-todo"
                   isRound
                   icon={<MdDoneAll />}
+                  type="submit"
+                />
+                 <IconButton
+                  marginLeft="10px"
+                  aria-label="add-todo"
+                  isRound
+                  icon={<MdOutlineDeleteOutline />}
                   type="submit"
                 />
               </Box>
