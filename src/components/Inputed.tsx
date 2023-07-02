@@ -1,21 +1,59 @@
-import { Input, Box, Center, Text, Select, IconButton } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Input, Box, Center, Text, IconButton } from "@chakra-ui/react";
+import React, { useCallback, useState } from "react";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 //import { ChangeEvent } from "react";
 import { List } from "./List";
+import { Complete } from "./Complete";
 
 interface IProps {}
 
 export const Inputed: React.FC<IProps> = () => {
+
   const [inputText, setInputText] = useState<string>("");
 
-  const [toDoListArray, setToDoListArray] = useState<string[]>([]);
+  const [toDoListArray, setToDoListArray] = useState<{value:string; checked:boolean, id:number}[]>([]);
 
   const listHandeler = () => {
     if (inputText.trim()) {
-      setToDoListArray((prev) => [...prev, inputText]);
+      setToDoListArray((prev) => [...prev, {value:inputText, checked:false, id:prev.length ? (prev.at(-1)?.id ?? 0) +1 : 0}]);
     }
   };
+
+  const onSetCheckHandler = useCallback((id:number) =>{
+    setToDoListArray(prev=>{
+      return prev.map((todo)=>{
+        if(todo.id === id){
+          return {
+            ...todo,
+            checked: !todo.checked
+          }
+        }
+        return todo
+      })
+    })
+  },[])
+
+
+  const onDelete = useCallback((id:number) =>{
+    setToDoListArray(prev => {
+      return prev.filter(todo=>todo.id !== id)
+     
+    })
+  },[])
+
+  // const onCompleted = useCallback((id:number) =>{
+  //   setToDoListArray(prev => {
+  //   return prev.filter(todo=>{ 
+  //     if(todo.id === id){
+  //     return {
+        
+  //       checked: todo.checked
+  //     }
+  //   }
+  //   return todo})
+     
+  //   })
+  // },[])
 
   return (
     <>
@@ -53,15 +91,11 @@ export const Inputed: React.FC<IProps> = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Select placeholder="Select.." border="2px solid black">
-            <option value="all">All</option>
-            <option value="completed">Completed</option>
-            <option value="uncomplited">Uncompleted</option>
-          </Select>
+          <Complete/>
         </Box>
       </Center>
 
-      <List toDoListArray={toDoListArray} />
+      <List toDoListArray={toDoListArray} onSetCheckHandler={onSetCheckHandler} onDelete={onDelete}/>
     </>
   );
 };
