@@ -2,15 +2,26 @@ import { Box, IconButton, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdDoneAll, MdOutlineDeleteOutline } from "react-icons/md";
 
+
+
+
 interface AProps {
   toDoListArray: { value: string; checked: boolean, id:number }[];
   onSetCheckHandler: (id:number)=> void
   onDelete: (id:number)=> void
+  completeState: string
 }
-export const List: React.FC<AProps> = ({ toDoListArray, onSetCheckHandler, onDelete }) => {
+
+
+
+export const List: React.FC<AProps> = ({ toDoListArray, onSetCheckHandler, onDelete, completeState }) => {
   return (
     <>
+
+    
+
       {toDoListArray.map((todo, index) => {
+      if(completeState === "all"){
         return (
           <Box display="flex" flexDirection="row">
             <Box
@@ -31,7 +42,7 @@ export const List: React.FC<AProps> = ({ toDoListArray, onSetCheckHandler, onDel
                 isRound
                 icon={<MdDoneAll />}
                 type="submit"
-                onClick={()=> onSetCheckHandler(todo.id)}
+                onClick={()=> onSetCheckHandler(todo.id)  }
               />
               <IconButton
                 marginLeft="10px"
@@ -44,6 +55,8 @@ export const List: React.FC<AProps> = ({ toDoListArray, onSetCheckHandler, onDel
             </Box>
           </Box>
         );
+      }
+  
       })}
     </>
   );

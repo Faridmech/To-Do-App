@@ -1,59 +1,68 @@
-import { Input, Box, Center, Text, IconButton } from "@chakra-ui/react";
+import { Input, Box, Center, Text, IconButton, Select } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { BsFillPlusCircleFill } from "react-icons/bs";
 //import { ChangeEvent } from "react";
 import { List } from "./List";
-import { Complete } from "./Complete";
 
 interface IProps {}
 
 export const Inputed: React.FC<IProps> = () => {
-
   const [inputText, setInputText] = useState<string>("");
 
-  const [toDoListArray, setToDoListArray] = useState<{value:string; checked:boolean, id:number}[]>([]);
+  const [toDoListArray, setToDoListArray] = useState<
+    { value: string; checked: boolean; id: number }[]
+  >([]);
+
+  const [completeState, setCompleteState] = useState<string>("");
 
   const listHandeler = () => {
     if (inputText.trim()) {
-      setToDoListArray((prev) => [...prev, {value:inputText, checked:false, id:prev.length ? (prev.at(-1)?.id ?? 0) +1 : 0}]);
+      setToDoListArray((prev) => [
+        ...prev,
+        {
+          value: inputText,
+          checked: false,
+          id: prev.length ? (prev.at(-1)?.id ?? 0) + 1 : 0,
+        },
+      ]);
     }
   };
 
-  const onSetCheckHandler = useCallback((id:number) =>{
-    setToDoListArray(prev=>{
-      return prev.map((todo)=>{
-        if(todo.id === id){
+  const onSetCheckHandler = useCallback((id: number) => {
+    setToDoListArray((prev) => {
+      return prev.map((todo) => {
+        if (todo.id === id) {
           return {
             ...todo,
-            checked: !todo.checked
-          }
+            checked: !todo.checked,
+          };
         }
-        return todo
-      })
-    })
-  },[])
+        return todo;
+      });
+    });
+  }, []);
 
+  const onDelete = useCallback((id: number) => {
+    setToDoListArray((prev) => {
+      return prev.filter((todo) => todo.id !== id);
+    });
+  }, []);
 
-  const onDelete = useCallback((id:number) =>{
-    setToDoListArray(prev => {
-      return prev.filter(todo=>todo.id !== id)
-     
-    })
-  },[])
+  // const onCompleted = useCallback((id: number) => {
+  //   setToDoListArray((prev) => {
+  //     return prev.filter((todo) => {
+  //       if (todo.id === id) {
+  //         return {
+  //           checked: todo.checked,
 
-  // const onCompleted = useCallback((id:number) =>{
-  //   setToDoListArray(prev => {
-  //   return prev.filter(todo=>{ 
-  //     if(todo.id === id){
-  //     return {
-        
-  //       checked: todo.checked
-  //     }
-  //   }
-  //   return todo})
-     
-  //   })
-  // },[])
+  //         };
+  //       }
+  //       return todo;
+  //     });
+
+  //   });
+
+  // }, []);
 
   return (
     <>
@@ -62,7 +71,7 @@ export const Inputed: React.FC<IProps> = () => {
           Write your do list and keep tracking
         </Text>
       </Center>
-      <Center marginBottom='5rem'>
+      <Center marginBottom="5rem">
         <Box
           marginTop="2rem"
           width="700px"
@@ -76,7 +85,7 @@ export const Inputed: React.FC<IProps> = () => {
             onChange={(e) => setInputText(e.target.value)}
           />
           <IconButton
-            marginLeft='10px'
+            marginLeft="10px"
             aria-label="add-todo"
             isRound
             icon={<BsFillPlusCircleFill />}
@@ -91,11 +100,28 @@ export const Inputed: React.FC<IProps> = () => {
           alignItems="center"
           justifyContent="center"
         >
-          <Complete/>
+          <Select
+            placeholder="Select.."
+            border="2px solid black"
+            onChange={(e) => {
+              const selectedState = e.target.value;
+              setCompleteState(selectedState);
+            }}
+          >
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="uncomplited">Uncompleted</option>
+          </Select>
+          {completeState}
         </Box>
       </Center>
 
-      <List toDoListArray={toDoListArray} onSetCheckHandler={onSetCheckHandler} onDelete={onDelete}/>
+      <List
+       completeState = {completeState}
+        toDoListArray={toDoListArray}
+        onSetCheckHandler={onSetCheckHandler}
+        onDelete={onDelete}
+      />
     </>
   );
 };

@@ -1,23 +1,30 @@
 import { Select } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 // interface AProps {
-//   toDoListArray: { value: string; checked: boolean, id:number }[];
-  
-//   onCompleted: (id:number)=> void
+//   onCompleted: (id: number) => void;
 // }
 
-
-
-
 export const Complete: React.FC = () => {
+
+
+  const [completeState, setCompleteState] = useState<string>("");
+
   return (
     <>
-    
-    <Select placeholder="Select.." border="2px solid black">
-            <option value="all">All</option>
-            <option value="completed"  >Completed</option>
-            <option value="uncomplited">Uncompleted</option>
-    </Select>
-    
+      <Select
+        placeholder="Select.."
+        border="2px solid black"
+        onChange={(e) => {
+          const selectedState = e.target.value;
+          setCompleteState(selectedState);
+          
+        }}
+      >
+        <option value="all">All</option>
+        <option value="completed">Completed</option>
+        <option value="uncomplited">Uncompleted</option>
+      </Select>
+      {completeState}
     </>
-)};
+  );
+};
