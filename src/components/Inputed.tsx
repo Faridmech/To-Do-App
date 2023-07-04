@@ -13,7 +13,7 @@ export const Inputed: React.FC<IProps> = () => {
     { value: string; checked: boolean; id: number }[]
   >([]);
 
-  const [completeState, setCompleteState] = useState<string>("");
+  const [completeState, setCompleteState] = useState<string>("all");
 
   const listHandeler = () => {
     if (inputText.trim()) {
@@ -47,22 +47,6 @@ export const Inputed: React.FC<IProps> = () => {
       return prev.filter((todo) => todo.id !== id);
     });
   }, []);
-
-  // const onCompleted = useCallback((id: number) => {
-  //   setToDoListArray((prev) => {
-  //     return prev.filter((todo) => {
-  //       if (todo.id === id) {
-  //         return {
-  //           checked: todo.checked,
-
-  //         };
-  //       }
-  //       return todo;
-  //     });
-
-  //   });
-
-  // }, []);
 
   return (
     <>
@@ -112,12 +96,11 @@ export const Inputed: React.FC<IProps> = () => {
             <option value="completed">Completed</option>
             <option value="uncomplited">Uncompleted</option>
           </Select>
-          {completeState}
         </Box>
       </Center>
 
       <List
-       completeState = {completeState}
+        completeState={completeState}
         toDoListArray={toDoListArray}
         onSetCheckHandler={onSetCheckHandler}
         onDelete={onDelete}
